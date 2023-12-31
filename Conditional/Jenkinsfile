@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage ('Build') {
+            when {
+                expression {
+                    10 + 5 == 15
+                }
+            }
+            steps {
+                echo 'Build steps only get executed if above experssion is true'
+            }
+        }
+
+        stage ('Test') {
+            when {
+                expression {
+                    10 + 5 == 15 && 5 + 6 == 10
+                }
+            }
+            steps {
+                echo 'Tests Build steps only get executed if above experssion is true'
+            }
+        }
+
+        stage ('Deploy') {
+            steps {
+                echo 'Deploying the application'
+            }
+        }
+    }
+}

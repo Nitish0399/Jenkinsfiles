@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    
+    environment {
+        NEW_VERSION = "1.1.0"
+    }
+    stages {
+        stage ('Build') {
+            steps {
+                echo 'Build steps only get executed if above experssion is true'
+                echo "New version is ${NEW_VERSION}"
+            }
+        }
+
+        stage ('Test') {
+            when {
+                expression {
+                    JOB_NAME == "learn"
+                }
+            }
+            steps {
+                echo 'Tests Build steps only get executed if above experssion is true'
+            }
+        }
+
+        stage ('Deploy') {
+            steps {
+                echo 'Deploying the application'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Jenkins build number is ${BUILD_ID}"
+        }
+    }
+}
